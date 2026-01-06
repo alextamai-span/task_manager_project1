@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+      integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>My Project</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Task Manager</h1>
+      </header>
+
+      <form id="task-form">
+        <div class="form-control">
+          <input
+            type="text"
+            class="form-input"
+            id="task-input"
+            name="task"
+            placeholder="Enter task"
+          />
+        </div>
+
+        <div class="form-control">
+          <input
+            type="text"
+            class="form-input"
+            id="description-input"
+            name="description"
+            placeholder="Enter description (optional)"
+          />
+        </div>
+
+        <div class="form-control">
+          <label for="Category">Category: </label>
+          <select name="categories" id="task-categories" class="form-category">
+            <option value="Select">Select</option>
+            <option value="Work">Work</option>
+            <option value="Family">Family</option>
+            <option value="Personal">Personal</option>
+          </select>
+        </div>
+
+        <div class="form-control">
+            <label for="Deadline">Deadline: </label>
+            <input type="date" id="task-deadline" class="form-deadline">
+        </div>
+      
+        <div class="form-control">
+          <button type="submit" class="btn">
+            <i class="fa-solid fa-plus"></i> Add task
+          </button>
+        </div>
+      </form>
+
+      <ul id="task-list" class="tasks"></ul>
+
+      <button id="clear" class="btn-clear">Clear All</button>
+    </div>
+
+    <script src="script_project.js"></script>
+  </body>
+</html>
