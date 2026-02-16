@@ -1,9 +1,38 @@
-<!DOCTYPE html>
+<!-- saying this is an HTML file -->
+<!DOCTYPE html> 
+<!-- set the language to english -->
 <html lang="en">
+  <!-- head: contains meta/data information about the HTML document -->
   <head>
+    <!-- meta: specifies metadata about the HTML document -->
+    <!--
+      set the character encoding to UTF-8
+      UTF-8: unicode transformation format with 8-bit encoding;
+        is character encoding that represents characters from almost all
+        languages in the world, using 8 bits (1 byte) for each character
+    -->
     <meta charset="UTF-8" />
+
+    <!-- 
+      tells browser (IE - Internet Explorer) to use the latest rendering engine available
+    -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!--
+      viewport: controls the layout on mobile browsers
+      width: sets the page width to the device
+      initial-scale: sets the initial zoom level
+    -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- link: used to link external resources, such as stylesheets -->
+    <!--
+      rel: specifies the relationship 
+      href: specifies the URL of the linked resource
+      integrity: ensures that the file/link has not been tampered with
+      crossorigin: handles CORS (Cross-Origin Resource Sharing) requests
+      referrerpolicy: controls the referrer information sent with requests
+    -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
@@ -11,17 +40,47 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="style.css" />
+
+    <!--
+      links my own stylesheet (style.css) to the HTML document
+      rel: specifies the relationship
+      href: specifies the URL of the linked resource
+    -->
+    <link 
+      rel="stylesheet"
+      href="style.css"
+    />
+
+    <!-- title: specifies the title of the HTML document in the browser tab title -->
     <title>My Project</title>
   </head>
+
+  <!-- body: the main content area of the HTML document -->
   <body>
+    <!-- div: a generic container element, groups elements together -->
     <div class="container">
+      <!-- header: contains the main heading of the page -->
       <header>
+        <!-- h1 (highest level heading): the main heading of the page -->
         <h1>Task Manager</h1>
       </header>
 
+      <!-- form: used to collect user input -->
+      <!--
+        used instead of having to group elements together
+        id: unique identifier for the form
+      -->
       <form id="task-form">
         <div class="form-control">
+          <!-- input: create interactive controls for web-based forms -->
+          <!--
+            type: specifies the type of input control
+              text: a single-line text input field
+            class: CSS styling
+            id: unique identifier for the input
+            name: name when submitting form data
+            placeholder: helper text that appears if the text is empty
+          -->
           <input
             type="text"
             class="form-input"
@@ -42,8 +101,19 @@
         </div>
 
         <div class="form-control">
+          <!-- label: define a label for an input element -->
+          <!-- for: specifies the ID of the input element the label is associated with -->
           <label for="Category">Category: </label>
+
+          <!-- select: create a dropdown list -->
+          <!-- 
+            name: name when submitting form data
+            id: unique identifier for the select element
+            class: CSS styling
+          -->
           <select name="categories" id="task-categories" class="form-category">
+            <!-- option: defines an option in a select dropdown -->
+            <!-- value: the value submitted when the form is sent -->
             <option value="Select">Select</option>
             <option value="Work">Work</option>
             <option value="Family">Family</option>
@@ -52,22 +122,53 @@
         </div>
 
         <div class="form-control">
+            <!-- label: define a label for an input element -->
+            <!-- for: specifies the ID of the input element the label is associated with -->
             <label for="Deadline">Deadline: </label>
+
+            <!-- input: create interactive controls for web-based forms -->
+            <!--
+              type: specifies the type of input control
+                date: select a date from a calendar interface
+              id: unique identifier for the input
+              class: CSS styling
+            -->
             <input type="date" id="task-deadline" class="form-deadline">
         </div>
       
         <div class="form-control">
+          <!-- button: create a clickable button -->
+          <!--
+            type: specifies the type of button
+              submit: submits the form data to a server
+            class: CSS styling
+          -->
           <button type="submit" class="btn">
+            <!-- i: used to include icons -->
+            <!-- class: the icon is from Font Awesome -->
             <i class="fa-solid fa-plus"></i> Add task
           </button>
         </div>
       </form>
 
+      <!-- ul: unordered list, used to display the list of tasks -->
+      <!--
+        id: unique identifier for the list
+        class: CSS styling
+      -->
       <ul id="task-list" class="tasks"></ul>
 
+      <!-- button: create a clickable button -->
+      <!--
+        type: specifies the type of button
+          clear: clear form or reset form
+        class: CSS styling
+      -->
       <button id="clear" class="btn-clear">Clear All</button>
     </div>
 
+    <!-- script: used to include JavaScript code -->
+    <!-- src: specifies the path to the JavaScript file -->
     <script src="script_project.js"></script>
   </body>
 </html>
