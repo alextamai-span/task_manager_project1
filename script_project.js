@@ -7,7 +7,7 @@ const taskInput = document.getElementById('task-input');
 const taskDescription = document.getElementById('description-input');
 const taskCategory = document.getElementById('task-categories');
 const taskDate = document.getElementById('task-deadline');
-const taskList = document.getElementById('task-list');
+const taskList = document.getElementById('task-list'); // taskList is a table
 const clearBtn = document.getElementById('clear');
 
 // function to display the tasks
@@ -41,7 +41,7 @@ const displayTasks = () => {
 
             // innerHTML: sets the HTML content of the list item, displays the task information and action buttons
             li.innerHTML = `
-                <div class="task-info">
+                <div class="task-info" id="task-info-${task.id}">
                     <!-- h3: defines a heading for the task -->
                     <h3>${task.title}</h3>
 
@@ -74,9 +74,9 @@ const displayTasks = () => {
                             pen: a pen icon, indicates editing the task
                             trash: a trash can icon, indicates deleting the task
                     -->
-                    <button class="complete-btn"><i class="fa-solid fa-check"></i></button>
-                    <button class="edit-btn"><i class="fa-solid fa-pen"></i></button>
-                    <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                    <button class="complete-btn" id="complete-btn-${task.id}"><i class="fa-solid fa-check"></i></button>
+                    <button class="edit-btn" id="edit-btn-${task.id}"><i class="fa-solid fa-pen"></i></button>
+                    <button class="delete-btn" id="delete-btn-${task.id}"><i class="fa-solid fa-trash"></i></button>
                 </div>  
             `;
             
@@ -155,7 +155,7 @@ taskForm.addEventListener('submit', (e) => {
 
 // function to add task to local storage
 // -------------------------------------
-function addTaskToLocal(task) {
+const addTaskToLocal = (task) => {
     // Get the existing array of tasks from localStorage
     // This returns an ARRAY
     const tasksInStorage = getTasksFromLocal();
@@ -171,7 +171,7 @@ function addTaskToLocal(task) {
 // get tasks from local storage
 // ----------------------------
 // returns an array of the tasks
-function getTasksFromLocal() {
+const getTasksFromLocal = () => {
     // temp variable to hold the tasks array from local storage
     let tasksInStorage;
 
@@ -192,9 +192,18 @@ function getTasksFromLocal() {
 // function to determine what happens when a task is clicked
 // ---------------------------------------------------------
 taskList.addEventListener('click', (e) => {
+    // find the closest element that was clicked that has an id
+    // closest- risky, dont want to use, use the id
+    const buttonClicked = e.target.closest('[id]');
+
+    if (!buttonClicked) {
+        // if no button was clicked, return early
+        return;
+    }
+
     // find the closest parent list item (li) of the clicked element
-    // li: the task that was clicked
-    const li = e.target.closest('li');
+    // li: the task list item was clicked
+    const li = buttonClicked.closest('li');
 
     if (!li) {
         // if no list item was found, return early
@@ -233,6 +242,7 @@ const completeTask = (taskObj) => {
     const tasksInStorage = getTasksFromLocal();
 
     // search the array of tasks for the task object with the matching id
+    // find returns ??????????????????????????????
     const task = tasksInStorage.find(t => t.id === taskObj.id);
 
     if (!task) { 
@@ -271,6 +281,7 @@ const editTask = (task) => {
     const tasksInStorage = getTasksFromLocal();
 
     // remove old task so editing replaces it
+    // filter returns a new array of the tasks
     tasks = tasksInStorage.filter(t => t.id !== task.id);
     
     // create a new array of tasks that excludes the task being edited
