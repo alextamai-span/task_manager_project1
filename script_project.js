@@ -88,7 +88,9 @@ const displayTasks = () => {
 
 // function to add tasks to the list
 // ---------------------------------
-// addEventListener: attaches an event handler to the task form, listens for the 'submit' event, and executes the provided function when the event occurs
+// addEventListener: attaches an event handler to the task form,
+//   listens for the 'submit' event, 
+//   executes the provided function when the event occurs
 taskForm.addEventListener('submit', (e) => {
     // Prevents page from reloading when form is submitted
     e.preventDefault();
@@ -145,9 +147,6 @@ taskForm.addEventListener('submit', (e) => {
 
     // display the tasks
     displayTasks();
-
-    // display quote after every add new task
-    // getQuote();
 
     // clear inputs after successful new task
     taskInput.value = '';
@@ -324,21 +323,9 @@ clearBtn.addEventListener('click', () => {
     displayTasks();
 });
 
-// function to display quote after every new task
-//  function getQuote() {
-//   let res = fetch("https://zenquotes.io/api/random");
-//   let data = res.json();
-//   alert(data.content);
-// }
-
-// function getQuote() {
-//   fetch("https://zenquotes.io/api/random/zen")
-//     .then(res => res.json())
-//     .then(data => alert(data.content));
-// }
-
 // auto-display tasks when the page loads
 // --------------------------------------
+// DOMContentLoaded: runs after HTML document has been parsed and DOM is fully created
 window.addEventListener('DOMContentLoaded', () => {
     // when page opens or reloads, go to display tasks function
     displayTasks();
