@@ -74,9 +74,27 @@ const displayTasks = () => {
                             pen: a pen icon, indicates editing the task
                             trash: a trash can icon, indicates deleting the task
                     -->
-                    <button class="complete-btn" id="complete-btn-${task.id}"><i class="fa-solid fa-check"></i></button>
-                    <button class="edit-btn" id="edit-btn-${task.id}"><i class="fa-solid fa-pen"></i></button>
-                    <button class="delete-btn" id="delete-btn-${task.id}"><i class="fa-solid fa-trash"></i></button>
+                    <button
+                      class="complete-btn"
+                      id="complete-btn-${task.id}"
+                      onclick="completeTask(${task.id})"
+                    >
+                      <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button
+                      class="edit-btn"
+                      id="edit-btn-${task.id}"
+                      onclick="editTask(${task.id})"
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button
+                      class="delete-btn"
+                      id="delete-btn-${task.id}"
+                      onclick="deleteTask(${task.id})"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
                 </div>  
             `;
             
@@ -151,6 +169,8 @@ taskForm.addEventListener('submit', (e) => {
     // clear inputs after successful new task
     taskInput.value = '';
     taskDescription.value = '';
+    taskCategory.value = 'Select';
+    taskDate.value = '';
 });
 
 // function to add task to local storage
@@ -189,61 +209,15 @@ const getTasksFromLocal = () => {
     return tasksInStorage;
 }
 
-// function to determine what happens when a task is clicked
-// ---------------------------------------------------------
-taskList.addEventListener('click', (e) => {
-    // find the closest element that was clicked that has an id
-    // closest- risky, dont want to use, use the id
-    const buttonClicked = e.target.closest('[id]');
-
-    if (!buttonClicked) {
-        // if no button was clicked, return early
-        return;
-    }
-
-    // find the closest parent list item (li) of the clicked element
-    // li: the task list item was clicked
-    const li = buttonClicked.closest('li');
-
-    if (!li) {
-        // if no list item was found, return early
-        return;
-    }
-
-    // get unique id
-    const id = Number(li.dataset.id);
-
-    // get the tasks from local storage as an array of task objects
-    const tasksInStorage = getTasksFromLocal();
-    // search the array of tasks for the task object with the matching id
-    const task = tasksInStorage.find(t => t.id === id);
-
-    if (!task) {
-        // if no task is found with the matching id, return early
-        return;
-    }
-
-    // determine which button was clicked 
-    if (e.target.closest('.complete-btn')) {
-        completeTask(task);
-    }
-    else if (e.target.closest('.edit-btn')) {
-        editTask(task);
-    } 
-    else if (e.target.closest('.delete-btn')) {
-        removeTask(task);
-    }
-});
-
 // function for task completed
 // ---------------------------
-const completeTask = (taskObj) => {
+const completeTask = (id) => {
     // get the tasks from local storage as an array of task objects
     const tasksInStorage = getTasksFromLocal();
 
     // search the array of tasks for the task object with the matching id
-    // find returns ??????????????????????????????
-    const task = tasksInStorage.find(t => t.id === taskObj.id);
+    // find returns first match of the search(id)
+    const task = tasksInStorage.find(t => t.id === id);
 
     if (!task) { 
         // if no task is found with the matching id, return early
@@ -264,32 +238,37 @@ const completeTask = (taskObj) => {
 
 // function for editting task
 // --------------------------
-const editTask = (task) => {
+const editTask = (id) => {
     // ensure the user wants to edit the task
     if(!confirm('Are you sure you want to edit this task?')) {
         // if user clicks "Cancel", return early and do not proceed with editing
         return;
-    }    
+    }
+
+    // get the tasks from local storage as an array of task objects
+    const tasksInStorage = getTasksFromLocal();
+
+    // search the array of tasks for the task object with the matching id
+    // find returns first match of the search(id)
+    const task = tasksInStorage.find(t => t.id === id);
+
+    if (!task) { 
+        // if no task is found with the matching id, return early
+        return;
+    }
 
     // pre-fill the form inputs 
     taskInput.value = task.title;
     taskDescription.value = task.description;
     taskCategory.value = task.category;
     taskDate.value = task.deadline;
-
-    // get the tasks from local storage as an array of task objects
-    const tasksInStorage = getTasksFromLocal();
-
-    // remove old task so editing replaces it
-    // filter returns a new array of the tasks
-    tasks = tasksInStorage.filter(t => t.id !== task.id);
-    
+ 
     // create a new array of tasks that excludes the task being edited
     // will be removing the old task from local storage
-    const newTask = tasksInStorage.filter(t => t.id !== task.id);
+    const updatedTasks = tasksInStorage.filter(t => t.id !== task.id);
 
     // update the tasks in local storage with the modified task object
-    localStorage.setItem('tasks', JSON.stringify(newTask));
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 
     // update the display of tasks to reflect the change
     displayTasks();
@@ -297,7 +276,7 @@ const editTask = (task) => {
 
 // function to remove a task
 // -------------------------
-const removeTask = (task) => {
+const removeTask = (id) => {
     // ensure the user wants to remove the task
     if(!confirm('Are you sure you want to remove this task?')) {
         // if user clicks "Cancel", return early and do not proceed with removing
@@ -308,10 +287,10 @@ const removeTask = (task) => {
     const tasksInStorage = getTasksFromLocal();
 
     // create a new array of tasks that excludes the task being removed
-    const tasks = tasksInStorage.filter(t => t.id !== task.id);
+    const updatedTasks = tasksInStorage.filter(t => t.id !== id);
 
     // update the tasks in local storage with the modified array of tasks
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 
     // update the display of tasks to reflect the change
     displayTasks();
